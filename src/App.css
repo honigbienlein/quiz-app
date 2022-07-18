@@ -2,6 +2,7 @@
   text-align: center;
   background-color: black;
   background-image: url("./bgimg.jpg");
+  background-size: cover;
   color: darkred;
   height: 97vh;
   font-family: 'Permanent Marker', cursive;
