@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import htmlandcss from './htmlandcss.js';
 import jsandreact from './jsandreact.js';
@@ -6,10 +6,11 @@ const App = () => {
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [disabled, setDisabled] = useState(false)
 
   const [questions, setQuestions] = useState([...htmlandcss, ...jsandreact]);
-  // const [questionshtml, setQuestionshtml] = useState([...htmlandcss])
-  // const [questionsjs, setQuestionsjs] = useState([...jsandreact])
+  const [select, setSelect] = useState(true);
+  const [selectJS, setSelectJS] = useState(true);
   const [html, setHtml] = useState(true)
   const [react, setReact] = useState(true)
 
@@ -30,17 +31,41 @@ const App = () => {
     setScore(0);
     setCurrentQuestion(0);
     setShowResults(false);
+    setDisabled(false)
   };
- const handleChange = (e) => {
-  // if ('htmlandcss' === e.target.name) {
-  //   setQuestionshtml(prev => [...prev, e.target.name])
-  // } else if (jsandreact === e.target.name) {
-  //   setQuestionsjs(prev => [...prev, e.target.name])
-  // } else if (htmlandcss === e.target.name && jsandreact === e.target.name){
-  //   setQuestions(prev => [...prev, e.target.name])
-  // } 
-  setReact(true)
- }
+  const change = () => {
+    setSelect(!select);
+  };
+  const changeJS = () => {
+    setSelectJS(!selectJS);
+  };
+
+  useEffect(() => {
+    if (select && selectJS) {
+      setQuestions([...htmlandcss, ...jsandreact]);
+    } else if (!select) {
+      setQuestions([...jsandreact]);
+    } else if (!select) {
+      setQuestions([...htmlandcss]);
+    }
+  }, [select]);
+
+  useEffect(()=>{
+    if (currentQuestion > 0) {
+      setDisabled(true)
+    }
+  }, [currentQuestion])
+
+  useEffect(() => {
+    if (select && selectJS) {
+      setQuestions([...htmlandcss, ...jsandreact]);
+    } else if (!selectJS) {
+      setQuestions([...htmlandcss]);
+    }
+  }, [selectJS]);
+
+
+
 
   return (
     <div className="App">
@@ -50,13 +75,13 @@ const App = () => {
       {/* Checkbox */}
       <div>
         <label>
-        <input type="checkbox" name='htmlandcss' id='htmlandcss'  onChange={handleChange}/>HTML und CSS
+        <input type="checkbox" name='htmlandcss' id='htmlandcss'  onClick={change} defaultChecked={select} disabled={disabled}/>HTML und CSS
         </label>
       </div>
       
       <div>
         <label>
-        <input type="checkbox" name='jsandreact' id='jsandreact'  onChange={handleChange}/>JS und React
+        <input type="checkbox" name='jsandreact' id='jsandreact'  onClick={changeJS} defaultChecked={selectJS} disabled={disabled}/>JS und React
         </label>
       </div>
 
