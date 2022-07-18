@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import htmlandcss from './htmlandcss.js';
 import jsandreact from './jsandreact.js';
@@ -6,14 +6,13 @@ const App = () => {
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [disabled, setDisabled] = useState(false)
 
-  const questions = [...htmlandcss, ...jsandreact];
-  // const log = () => {
-  //   console.log(htmlandcss);
-  //   console.log(jsandreact);
-  //   console.log(questions);
-  // };
-  // log();
+  const [questions, setQuestions] = useState([...htmlandcss, ...jsandreact]);
+  const [select, setSelect] = useState(true);
+  const [selectJS, setSelectJS] = useState(true);
+  const [html, setHtml] = useState(true)
+  const [react, setReact] = useState(true)
 
   const optionClicked = (isCorrect) => {
     // Increment the score
@@ -32,11 +31,61 @@ const App = () => {
     setScore(0);
     setCurrentQuestion(0);
     setShowResults(false);
+    setDisabled(false)
   };
+  const change = () => {
+    setSelect(!select);
+  };
+  const changeJS = () => {
+    setSelectJS(!selectJS);
+  };
+
+  useEffect(() => {
+    if (select && selectJS) {
+      setQuestions([...htmlandcss, ...jsandreact]);
+    } else if (!select) {
+      setQuestions([...jsandreact]);
+    } else if (!select) {
+      setQuestions([...htmlandcss]);
+    }
+  }, [select]);
+
+  useEffect(()=>{
+    if (currentQuestion > 0) {
+      setDisabled(true)
+    }
+  }, [currentQuestion])
+
+  useEffect(() => {
+    if (select && selectJS) {
+      setQuestions([...htmlandcss, ...jsandreact]);
+    } else if (!selectJS) {
+      setQuestions([...htmlandcss]);
+    }
+  }, [selectJS]);
+
+
+
+
   return (
     <div className="App">
       {/* 1. Header */}
       <h1>Web Dev Quizz</h1>
+
+      {/* Checkbox */}
+      <div>
+        <label>
+        <input type="checkbox" name='htmlandcss' id='htmlandcss'  onClick={change} defaultChecked={select} disabled={disabled}/>HTML und CSS
+        </label>
+      </div>
+      
+      <div>
+        <label>
+        <input type="checkbox" name='jsandreact' id='jsandreact'  onClick={changeJS} defaultChecked={selectJS} disabled={disabled}/>JS und React
+        </label>
+      </div>
+
+
 
       {/* 2. Aktuelle Punktzahl */}
       <h2>Aktuelle Punktzahl: {score}</h2>
