@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   background-color: black;
-  color: wheat;
+  background-image: url("./bgimg.jpg");
+  color: darkred;
   height: 97vh;
   font-family: 'Permanent Marker', cursive;
   /*font-family: 'The Nautigal', cursive;*/
@@ -16,11 +17,12 @@
   height: auto;
 
   /* Visual  */
+  opacity: 90%;
   background-color: gray;
   padding: 16px;
   border: darkred 3px solid;
   border-radius: 16px;
-  color: wheat;
+  color: blue;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
     rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
@@ -39,7 +41,7 @@ li {
 }
 
 .fragenText {
-  color: darkblue;
+  color: darkred;
   font-size: 24px;
 }
 

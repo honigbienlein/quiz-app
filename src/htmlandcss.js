@@ -1,6 +1,6 @@
 const htmlandcss = [
   {
-    text: 'Wöfür steht HTML? ',
+    text: 'Wofür steht HTML? ',
     options: [
       { id: 0, text: 'Hyperlinks und Text Markup Language ', isCorrect: false },
       { id: 1, text: 'Hyper Text Markup Language ', isCorrect: true },
